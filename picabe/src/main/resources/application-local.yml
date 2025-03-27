@@ -1,0 +1,73 @@
+server:
+  port: 8090
+
+payment:
+  url: "https://pay1s.emiu.vn/checkout"
+
+upload:
+  url: ${UPLOAD_IMAGE_URL:https://cloud.emiu.vn/upload/images}
+  api-key: ${UPLOAD_IMAGE_API_KEY:EDUMALL}
+
+baseUrl:
+  uaa: http://localhost:8080/api/v1/uaa
+#  uaa: https://apiagoda.emiu.vn/api/v1/uaa
+
+application:
+  jwt:
+    secret: "1TjXchw5FloESb63Kc+DFhTARvpWL4jUGCwfGWxuG5SIf/1y/LgJxHnMqaF6A/ij"
+    validDuration: 3600 # in second
+    refreshableDuration: 36000 # in seconds
+
+spring:
+  #  kafka:
+  #    bootstrap-servers: localhost:9092
+  #    consumer:
+  #      group-id: uaa-service
+  #      auto-offset-reset: earliest
+  #      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  #      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  datasource:
+    url: jdbc:mysql://localhost:3306/travelapp
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+
+  cache:
+    type: redis
+  #  data:
+  #    redis:
+  #      host: localhost
+  #      port: 6380
+  #      password: yourpassword  # Nếu không có mật khẩu, để trống
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        highlight_sql: true
+        jdbc:
+          batch_size: 20
+          batch_versioned_data: true
+        order_inserts: true
+        order_updates: true
+    show-sql: true
+  #    open-in-view: false
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+        oauth2: DEBUG
+      cloud:
+        openfeign: DEBUG
+    feign:
+      Logger: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
